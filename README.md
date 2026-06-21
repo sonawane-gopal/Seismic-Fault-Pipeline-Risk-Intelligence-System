@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SFPRIS — Seismic-Fault Pipeline Risk Intelligence System
 
 ## Overview
@@ -55,3 +56,7 @@ sfpris/
 
 ## Author
 Gopal Sonawane — Geospatial Analyst
+=======
+# Seismic-Fault-Pipeline-Risk-Intelligence-System
+End-to-end geospatial ML project predicting US pipeline incident risk using seismic fault proximity, earthquake history, and PHMSA incident data. Built with PostGIS, Python, ArcGIS Pro, XGBoost, and Streamlit.
+>>>>>>> 5be5d704cf42595ecf6b60e989a83e668381bcc2
