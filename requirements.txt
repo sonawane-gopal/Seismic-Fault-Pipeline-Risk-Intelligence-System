@@ -1,5 +1,6 @@
 pandas
 sqlalchemy
+geoalchemy2
 psycopg2-binary
 geopandas
 requests
@@ -13,3 +14,4 @@ scikit-learn
 shap
 matplotlib
 seaborn
+shap
