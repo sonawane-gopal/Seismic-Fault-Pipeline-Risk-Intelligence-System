@@ -122,3 +122,66 @@ year_state = filtered_df[filtered_df['ONSHORE_ST'].isin(top5_states)]
 year_state = year_state.groupby(['IYEAR', 'ONSHORE_ST']).size().reset_index(name='count')
 fig10 = px.line(year_state, x='IYEAR', y='count', color='ONSHORE_ST', title='Year-wise Trend for Top 5 States', markers=True)
 st.plotly_chart(fig10, use_container_width=True)
+
+
+# Risk Predictor
+st.subheader("Risk Score Predictor")
+st.markdown("Enter pipeline details to predict if an incident will be significant:")
+
+@st.cache_resource
+def load_demo_model():
+    import joblib
+    import requests
+    import tempfile
+    url = "https://raw.githubusercontent.com/sonawane-gopal/Seismic-Fault-Pipeline-Risk-Intelligence-System/main/model_demo.pkl"
+    r = requests.get(url)
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.pkl') as f:
+        f.write(r.content)
+        return joblib.load(f.name)
+
+demo_model = load_demo_model()
+
+col_p1, col_p2, col_p3 = st.columns(3)
+with col_p1:
+    p_year = st.number_input("Incident Year", min_value=2010, max_value=2030, value=2020)
+    p_cost = st.number_input("Total Cost ($)", min_value=0, value=50000)
+    p_diameter = st.number_input("Pipe Diameter (inches)", min_value=0.0, value=12.0)
+with col_p2:
+    p_install = st.number_input("Installation Year", min_value=1900, max_value=2024, value=1980)
+    p_hubdist = st.number_input("Distance to Fault (meters)", min_value=0.0, value=50000.0)
+    p_eqcount = st.number_input("Earthquake Count Nearby", min_value=0, value=10)
+with col_p3:
+    p_eqmag = st.number_input("Max Earthquake Magnitude", min_value=0.0, value=3.5)
+    p_eqdepth = st.number_input("Avg Earthquake Depth (km)", min_value=0.0, value=5.0)
+    p_pipetype = st.selectbox("Pipeline Type ", ['hazardous_liquid', 'gas'])
+
+p_cause = st.selectbox("Cause ", sorted(df['CAUSE'].dropna().unique().tolist()))
+p_state = st.selectbox("State ", sorted(df['ONSHORE_ST'].dropna().unique().tolist()))
+p_material = st.selectbox("Material", sorted(df['MATERIAL_I'].dropna().unique().tolist()))
+p_system = st.selectbox("System Part", sorted(df['SYSTEM_PAR'].dropna().unique().tolist()))
+
+if st.button("Predict Risk"):
+    from sklearn.preprocessing import LabelEncoder
+    import numpy as np
+
+    input_data = pd.DataFrame([{
+        'IYEAR': p_year, 'CAUSE': p_cause, 'ONSHORE_ST': p_state,
+        'TOTAL_COST': p_cost, 'PIPE_DIAME': p_diameter, 'MATERIAL_I': p_material,
+        'INSTALLATI': p_install, 'SYSTEM_PAR': p_system, 'HubDist': p_hubdist,
+        'eq_count': p_eqcount, 'eq_max_mag': p_eqmag, 'eq_avg_depth': p_eqdepth,
+        'pipe_type': p_pipetype
+    }])
+
+    cat_cols = ['CAUSE', 'ONSHORE_ST', 'MATERIAL_I', 'SYSTEM_PAR', 'pipe_type']
+    le = LabelEncoder()
+    for col in cat_cols:
+        le.fit(df[col].fillna('UNKNOWN'))
+        input_data[col] = le.transform(input_data[col])
+
+    prob = demo_model.predict_proba(input_data)[0][1]
+    pred = demo_model.predict(input_data)[0]
+
+    if pred == 1:
+        st.error("HIGH RISK - Significant incident predicted! Probability: " + str(round(prob*100, 1)) + "%")
+    else:
+        st.success("LOW RISK - Non-significant incident predicted. Probability: " + str(round(prob*100, 1)) + "%")
