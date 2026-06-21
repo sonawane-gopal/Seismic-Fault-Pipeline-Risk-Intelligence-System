@@ -1,0 +1,15 @@
+pandas
+sqlalchemy
+psycopg2-binary
+geopandas
+requests
+openpyxl
+shapely
+python-dotenv
+folium
+streamlit
+xgboost
+scikit-learn
+shap
+matplotlib
+seaborn

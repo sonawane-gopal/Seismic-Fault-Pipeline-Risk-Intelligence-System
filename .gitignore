@@ -1,0 +1,29 @@
+# Environment
+.env
+venv/
+__pycache__/
+*.pyc
+
+# Data files (too large for git)
+data/raw/
+data/processed/
+*.xlsx
+*.csv
+*.shp
+*.dbf
+*.shx
+*.prj
+
+# Models
+models/
+
+# Outputs
+outputs/
+
+# VS Code
+.vscode/
+
+# Python
+*.egg-info/
+dist/
+build/
