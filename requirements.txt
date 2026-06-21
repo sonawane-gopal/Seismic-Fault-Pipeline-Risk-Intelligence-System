@@ -14,4 +14,4 @@ scikit-learn
 shap
 matplotlib
 seaborn
-shap
+plotly
