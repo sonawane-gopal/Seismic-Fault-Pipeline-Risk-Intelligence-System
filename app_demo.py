@@ -15,8 +15,14 @@ def load_data():
 df = load_data()
 st.success("Data loaded: " + str(df.shape[0]) + " sample incidents")
 
-st.info("What is a Significant Incident? A pipeline incident is classified as SIGNIFICANT if it results in a fatality or injury, fire or explosion, property damage exceeding $50,000, or a major spill.")
-
+st.info("""
+**What is a Significant Incident?**
+A pipeline incident is SIGNIFICANT if it causes:
+- Fatality or hospitalization
+- Fire or explosion  
+- Property damage over $50,000
+- Major liquid or gas spill
+""")
 # Sidebar filters
 st.sidebar.header("Filters")
 pipe_type = st.sidebar.selectbox("Pipeline Type", ['All', 'hazardous_liquid', 'gas'])
