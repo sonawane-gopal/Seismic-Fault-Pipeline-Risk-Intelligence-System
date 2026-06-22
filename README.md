@@ -25,19 +25,33 @@ and pipeline incident data.
 - USGS Earthquake Catalog (REST API)
 
 ## Project Structure
-sfpris/
 
+```
+Seismic-Fault-Pipeline-Risk-Intelligence-System/
+│
+├── notebooks/
+│   ├── 01_explore_phmsa.ipynb        # Load PHMSA HL and Gas incidents to PostGIS
+│   ├── 02_load_faults.ipynb          # Load USGS Quaternary fault lines to PostGIS
+│   ├── 03_load_hifld.ipynb           # Load EIA pipeline network to PostGIS
+│   ├── 04_load_earthquakes.ipynb     # Fetch USGS earthquake API and load to PostGIS
+│   ├── 05_export_shapefiles.ipynb    # Export PostGIS tables to shapefiles for QGIS
+│   └── 06_ml_training.ipynb         # Feature engineering, XGBoost training, SHAP
+│
 ├── data/
-│   ├── raw/          # original downloaded files
-│   └── processed/    # cleaned outputs
-├── notebooks/        # EDA notebooks
-├── src/              # Python scripts
-├── models/           # saved ML models
-├── outputs/          # maps, charts, exports
-├── requirements.txt
-├── .gitignore
-├── README.md
-└── .env
+│   ├── raw/                          # Original downloaded shapefiles and Excel files
+│   └── processed/                    # QGIS spatial outputs and ML datasets
+│
+├── models/
+│   └── xgboost_pipeline_risk.pkl    # Trained XGBoost classifier (local)
+│
+├── app.py                            # Full Streamlit dashboard (local version)
+├── app_demo.py                       # Demo Streamlit dashboard (deployed version)
+├── sample_data.csv                   # 500 sample incidents for Streamlit Cloud
+├── model_demo.pkl                    # Demo XGBoost model for deployment
+├── requirements.txt                  # Python dependencies
+├── .gitignore                        # Excludes data, models, venv, .env
+├── README.md                         # Project documentation
+└── .env                              # Database credentials (not pushed to GitHub)
 
 ## Phases
 - Phase 1 — ELT (PostGIS data loading)
@@ -46,7 +60,6 @@ sfpris/
 - Phase 4 — Publish to ArcGIS Online
 
 ## Author
-
 Gopal Sonawane — Geospatial Analyst
 
 # Seismic-Fault-Pipeline-Risk-Intelligence-System
