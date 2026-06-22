@@ -1,6 +1,9 @@
 <<<<<<< HEAD
 # SFPRIS — Seismic-Fault Pipeline Risk Intelligence System
 
+## Live Demo
+https://seismic-fault-pipeline-risk-intelligence-system-tddfwmfy7bmtk6.streamlit.app/
+
 ## Overview
 An end-to-end geospatial machine learning project that predicts pipeline risk 
 across the United States by combining seismic fault proximity, earthquake history, 
@@ -52,12 +55,12 @@ sfpris/
 - Phase 2 — Spatial Analysis (ArcGIS Pro)
 - Phase 3 — ML Training (Isolation Forest + XGBoost + SHAP)
 - Phase 4 — Publish to ArcGIS Online
-- Phase 5 — Streamlit + Docker Deployment
+
 
 ## Author
 
 Gopal Sonawane — Geospatial Analyst
-=======
+
 # Seismic-Fault-Pipeline-Risk-Intelligence-System
 End-to-end geospatial ML project predicting US pipeline incident risk using seismic fault proximity, earthquake history, and PHMSA incident data. Built with PostGIS, Python, ArcGIS Pro, XGBoost, and Streamlit.
 >>>>>>> 5be5d704cf42595ecf6b60e989a83e668381bcc2
